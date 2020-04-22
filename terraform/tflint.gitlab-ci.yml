@@ -1,0 +1,16 @@
+tflint:
+  stage: tflint
+  image:
+    name: hashicorp/terraform:$TERRAFORM_VERSION
+    entrypoint: [""]
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - terraform init -input=false -backend=false
+  script:
+    - wget https://github.com/wata727/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip -P /tmp
+    - unzip /tmp/tflint_linux_amd64.zip -d /usr/local/bin/
+    - terraform --version
+    - tflint --version
+    - ls -la ./
+    - tflint
